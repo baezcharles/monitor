@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "start": "node server.js"
+    "start": "node api.js"
   },
-  "main": "server.js",
+  "main": "api.js",
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
