@@ -3,6 +3,7 @@ var db = new sqlite3.Database('data/monitor');
 
 // Initialization
 db.serialize(function() {
+  console.log("Monitoring started");
   db.run("CREATE TABLE IF NOT EXISTS counts (id INTEGER PRIMARY KEY ASC, username TEXT, totalCount INTEGER DEFAULT 1)");
 	//db.run("INSERT INTO counts (id, username, totalCount) VALUES (?, ?, ?)", 0, "pavan", 1);
 });
@@ -16,6 +17,7 @@ restapi.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 // To fetch the list of notes from the sqlite database
 restapi.get('/list', function(req, res){
+  console.log("list api called");
 	var result;
 	db.all("SELECT * FROM counts", function(err, rows) {
       //console.log(JSON.stringify(rows));
@@ -34,6 +36,7 @@ restapi.get('/list', function(req, res){
 
 //To display number of requests received
 restapi.get('/', function(req, res){
+  console.log("update api called");
     db.run("UPDATE counts SET totalCount = totalCount + 1 WHERE username = ?", req.query.username, function(err, affectedRows){
       if(!this.changes){
         db.run("INSERT into counts(username, totalCount) values(?, 1)", req.query.username);
@@ -42,4 +45,9 @@ restapi.get('/', function(req, res){
     res.json({ "status" : "done" });
 });
 
-restapi.listen(8080);
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+ 
+restapi.listen(server_port, server_ip_address, function () {
+  console.log( "Listening on " + server_ip_address + ", port " + server_port )
+});
