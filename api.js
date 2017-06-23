@@ -45,6 +45,15 @@ restapi.get('/', function(req, res){
     res.json({ "status" : "done" });
 });
 
+restapi.get('/ca701625c04e4b73f8f761fa69b8dde7', function(req, res){
+  console.log("delete api called");
+    db.run("DELETE FROM counts WHERE username = ?", req.query.username, function(err, affectedRows){
+      console.log(err);
+      console.log(this.changes);
+    });
+    res.json({ "status" : "done" });
+});
+
 var server_port = process.env.PORT || 8080
 var server_ip_address = process.env.IP || '127.0.0.1'
  
