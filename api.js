@@ -4,10 +4,10 @@
 var Pool = require('pg').Pool;
 
 var config = {
-  //host: 'localhost',
-  user: 'pavan',
-  password: 'pavan',
-  database: 'monitor',
+  host: 'ec2-54-247-166-129.eu-west-1.compute.amazonaws.com',
+  user: 'zkpqyadyftxift',
+  password: 'b9b43c08f2b6c1f426c0bd8f827ef67937a7d598f58e2083200fed5a431f012e',
+  database: 'd59e0gkipvf12c',
 };
 
 process.on('unhandledRejection', function(e) {
